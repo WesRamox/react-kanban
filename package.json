@@ -7,8 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test": "echo \"no tests yet\"",
     "preview": "vite preview",
-    "json-server": "json-server --watch db.json"
+    "json-server": "json-server --watch db.json",
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
@@ -18,6 +20,8 @@
     "zod": "^4.0.14"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@eslint/js": "^9.30.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
@@ -26,6 +30,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "husky": "^9.1.7",
     "json-server": "^1.0.0-beta.3",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",

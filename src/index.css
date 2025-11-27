@@ -1,0 +1,5 @@
+button,
+.rt-Button,
+.rt-ButtonInner {
+  cursor: pointer !important;  
+}

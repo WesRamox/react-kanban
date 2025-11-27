@@ -1,66 +1,94 @@
-import { Badge, Button, Card, Flex, Heading, Text } from "@radix-ui/themes"
-import type { Task, TaskPriority, TaskStatus } from "../entities/Task"
-import { useTasks } from "../hooks/useTasks"
+import {
+  Badge,
+  Button,
+  Card,
+  Flex,
+  Heading,
+  Text,
+} from "@radix-ui/themes";
+import type {
+  Task,
+  TaskPriority,
+  TaskStatus,
+} from "../entities/Task";
+import { useTasks } from "../hooks/useTasks";
+import { EditTaskForm } from "./EditTaskForm";
 
 interface TaskCardProps {
-  task: Task
+  task: Task;
 }
 
-export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
-  const { deleteTask, updateTask } = useTasks()
+export const TaskCard: React.FC<
+  TaskCardProps
+> = ({ task }) => {
+  const { deleteTask, updateTask } = useTasks();
   const getActionText = (status: TaskStatus) => {
     const actionsTexts = {
-      "todo": "Iniciar",
-      "doing": "Concluir",
-      "done": "Arquivar"
-    }
-    return actionsTexts[status]
-  }
+      todo: "Iniciar",
+      doing: "Concluir",
+      done: "Arquivar",
+    };
+    return actionsTexts[status];
+  };
 
-  const getPriorityText = (priority: TaskPriority) => {
+  const getPriorityText = (
+    priority: TaskPriority
+  ) => {
     const priorityText = {
-      "low": "Baixa",
-      "medium": "Média",
-      "high": "Alta"
-    }
-    return priorityText[priority]
-  }
+      low: "Baixa",
+      medium: "Média",
+      high: "Alta",
+    };
+    return priorityText[priority];
+  };
 
   const getActionColor = (status: TaskStatus) => {
-    const actionColors: { [key: string]: "indigo" | "green" | "bronze" } = {
-      "todo": "indigo",
-      "doing": "green",
-      "done": "bronze"
-    }
-    return actionColors[status]
-  }
+    const actionColors: {
+      [key: string]:
+        | "indigo"
+        | "green"
+        | "bronze";
+    } = {
+      todo: "indigo",
+      doing: "green",
+      done: "bronze",
+    };
+    return actionColors[status];
+  };
 
-  const getPriorityColor = (priority: TaskPriority) => {
-    const priorityColors: { [key: string]: "sky" | "amber" | "tomato" } = {
-      "low": "sky",
-      "medium": "amber",
-      "high": "tomato"
-    }
-    return priorityColors[priority]
-  }
+  const getPriorityColor = (
+    priority: TaskPriority
+  ) => {
+    const priorityColors: {
+      [key: string]: "sky" | "amber" | "tomato";
+    } = {
+      low: "sky",
+      medium: "amber",
+      high: "tomato",
+    };
+    return priorityColors[priority];
+  };
 
   const handleUpdate = () => {
-    if(task.status === "todo") {
-      updateTask(task.id, { status: "doing"} )
+    if (task.status === "todo") {
+      updateTask(task.id, { status: "doing" });
     } else if (task.status === "doing") {
-      updateTask(task.id, { status: "done" })
+      updateTask(task.id, { status: "done" });
     }
-  }
+  };
 
   const handleDelete = (id: string) => {
-    const confirmation = confirm("Tem certeza que quer excluir?")
+    const confirmation = confirm(
+      "Tem certeza que quer excluir?"
+    );
 
-    if(confirmation) {
-      deleteTask(id)
+    if (confirmation) {
+      deleteTask(id);
     }
-  }
+  };
   return (
     <Card>
+      <EditTaskForm taskId={task.id} />
       <Flex align={"center"} gap={"4"}>
         <Heading as={"h3"} size={"3"}>
           {task.title}
@@ -93,4 +121,4 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
       </Flex>
     </Card>
   );
-}
+};

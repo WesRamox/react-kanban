@@ -7,6 +7,8 @@ export interface TasksContextData {
   createTask: (attributes: Omit<Task, "id">) => Promise<void>
   updateTask: (id: string, attributes: Partial<Omit<Task, "id">>) => Promise<void>
   deleteTask: (id: string) => Promise<void>
+  fetchTaskById: (id: string) => Promise<Task>
+  editTask: (id: string, attributes: Partial<Omit<Task, "id">>) => Promise<void>
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -41,13 +43,29 @@ export const TasksContextProvider: React.FC<TasksContextProviderProps> = ({ chil
       })
     }
 
+    const fetchTaskById = async (id: string): Promise<Task> => {
+      const task = await tasksService.fetchTaskById(id)
+      return task
+    }
+
+    const editTask = async (id: string, attributes: Partial<Omit<Task, "id">>) => {
+      await tasksService.editTask(id, attributes)
+        setTasks((currentState) => {
+          const updatedTasks = [...currentState]
+          const taskIndex = updatedTasks.findIndex((task) => task.id === id)
+          Object.assign(updatedTasks[taskIndex], attributes)
+          
+          return updatedTasks
+      })
+    }
+
     const deleteTask = async(id: string) => {
       await tasksService.deleteTask(id)
       setTasks((currentState) => currentState.filter((task) => task.id !== id))
     }
 
   return (
-    <TasksContext.Provider value={{ tasks, createTask, updateTask, deleteTask }}>
+    <TasksContext.Provider value={{ tasks, createTask, updateTask, deleteTask, fetchTaskById, editTask }}>
       {children}
     </TasksContext.Provider>
   )

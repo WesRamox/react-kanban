@@ -6,6 +6,7 @@ import {
 import { CreateTaskForm } from "./components/CreateTaskForm";
 import { TaskBoard } from "./components/TaskBoard";
 import { TasksContextProvider } from "./contexts/TasksContext";
+import "./index.css";
 
 function App() {
   return (
